@@ -1,0 +1,24 @@
+\begin{figure}[htb]
+		\centering
+		\begin{minipage}{0.8\textwidth}
+			\centering
+			\begin{subfigure}[b]{0.33\textwidth}\centering
+				\includegraphics[width=0.9\textwidth]{th.jpg}
+				\caption{First caption}
+				\label{fig:first_sub}
+			\end{subfigure}
+		    \\
+			\begin{subfigure}[b]{0.33\textwidth}\centering
+				\includegraphics[width=0.9\textwidth]{th.jpg}
+				\caption{Second caption}
+				\label{fig:second_sub}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.33\textwidth}\centering
+				\includegraphics[width=0.9\textwidth]{th.jpg}
+				\caption{Third caption}
+				\label{fig:third_sub}
+			\end{subfigure}
+			\caption{Common figure caption.}
+			\label{fig:sample_subfigures}
+		\end{minipage}
+	\end{figure}

@@ -1,0 +1,260 @@
+\documentclass[oneside]{ctexbook}
+\usepackage{xeCJK}
+\usepackage{tabularx}%表格包
+\usepackage{booktabs}%三线表包
+\usepackage{amsmath}%数学公式包
+\usepackage{fancyhdr}%设置页脚页眉需要的包
+\usepackage{listings}%代码环境包
+\usepackage{authblk}%多个作者包
+\usepackage{fontspec}%设置字体包
+\usepackage{color,xcolor}%颜色包
+\pagestyle{fancy}
+\author{钱昌发} 
+\author{王淇}
+\author{周致远}
+\affil{安徽大学}
+\title{数学模型参考答案及代码}
+%这里是页眉
+\lhead{安徽大学}%左边
+%\chead{中间}%中间
+\rhead{数学模型答案}%右边
+%这里是页脚
+%\lfoot{左边}%页脚左边
+\cfoot{第\thepage 页}%页脚中间
+%\rfoot{右边}%页脚右边
+\renewcommand{\headrulewidth}{0.4pt}%页眉
+\renewcommand{\headwidth}{\textwidth}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand\Authands{,}
+\newfontfamily\con{Consolas}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\lstset{
+	basicstyle=\fontsize{9pt}{10}\con, % size of fonts used for the code或改成\small\monaco稍大
+	numbers=left,                        % 设置行号
+	numberstyle=\tiny,            % 设置行号字体大小
+	columns=fullflexible,
+	breaklines=true,                 % automatic line breaking only at whitespace
+	captionpos=b,                    % sets the caption-position to bottom
+	tabsize=4,
+	commentstyle=\color{mygreen},    % 设置注释颜色
+	keywordstyle=\color{blue},       % 设置keyword颜色
+	stringstyle=\color,     % string literal style
+	%frame=single,                        % 设置有边框
+	language=matlab,
+}
+\begin{document}
+	\maketitle
+	\newpage
+	\noindent 第一题答案：
+\begin{lstlisting}
+  clc;clear all;close all;
+  f=-[50 100];
+  A=[1 1
+     2 1
+     0 1];
+  b=[300 400 250];
+  lb=[0 0];
+  ub=[inf inf];
+  a=linprog(f,A,b,[],[],lb,ub)
+  %answer:
+  Optimization terminated.
+  a =
+  50.0000
+  250.0000
+\end{lstlisting}
+
+\noindent 第二题答案：
+\begin{lstlisting}
+(1)
+  f=[1 2 3];
+  A=[-2 1 -1
+      1 1 2
+     0 -1 1];
+  b=[-4 8 -2];
+  lb=[0 0 0 ];
+  ub=[inf inf inf];
+  a=linprog(f,A,b,[],[],lb,ub)
+  %answer:
+  Optimization terminated.
+
+  a =
+
+  3.0000
+  2.0000
+  0.0000
+(2)
+  f=-[5 2 4];
+  A=[-3 -1 -2
+  -6 -3 -5];
+  b=[-2 -10];
+  lb=[0 0 0];
+  ub=[inf inf inf];
+  a=linprog(f,A,b,[],[],lb,ub)
+  answer:
+  NO ANSWER
+
+\end{lstlisting}
+\noindent 第三题答案：\\
+\textbf{解：}\par
+可建立0-1规划模型，假设对于每个井位的钻与不钻两个状态设为变量$x_{i}$，其中变量的值为1时代表钻，值为0时代表不钻，由题意可得以下模型：
+\begin{align}
+&\notag \textnormal{min}z=\sum_{i=1}^{10}c_{i}x_{i}\\
+&s.t.
+\begin{cases}
+x_{1}=x_{7}\\
+0.5*(x_{1}+x_{7})+x_{5}=1\\
+x_{3}+x_{5}=1\\
+x_{4}+x_{5}=1\\
+0\leq x_{i}\leq 1,\text{且}x_{1},x_{2},\dots,x_{10},\text{全部为整数}
+\end{cases}
+\end{align}
+\noindent 第四题答案：
+\begin{lstlisting}
+  clear all; clc;close all;
+  f=-[15 10 12 10 12 11 12 9 9 9 10 20 ...
+  15 17 13 18 17 9 9 13 7 13 10 13 12];
+  intcon=1:25;
+  A=[];
+  b=[];
+  Aeq=[ones(1,5),zeros(1,20);
+  zeros(1,5),ones(1,5),zeros(1,15);
+  zeros(1,10),ones(1,5),zeros(1,10);
+  zeros(1,15),ones(1,5),zeros(1,5);
+  zeros(1,20),ones(1,5);
+  full(sparse(ones(1,5),[1,6,11,16,21],ones(1,5))),zeros(1,4);
+  full(sparse(ones(1,5),[2,7,12,17,22],ones(1,5))),zeros(1,3);
+  full(sparse(ones(1,5),[3,8,13,18,23],ones(1,5))),zeros(1,2);
+  full(sparse(ones(1,5),[4,9,14,19,24],ones(1,5))),zeros(1,1);
+  full(sparse(ones(1,5),[5,10,15,20,25],ones(1,5)))];
+  beq=ones(10,1);
+  lb=zeros(25,1);
+  ub=ones(25,1);
+  [a,z]=intlinprog(f,intcon,A,b,Aeq,beq,lb,ub);
+  reshape(a,[5,5])
+  z
+\end{lstlisting}
+\noindent 第五题答案：
+\begin{lstlisting}[language={[ANSI]C}]
+  fun = @(x)50*x(1)+0.2*x(1)^2+50*x(2)+0.2*x(2)^2+...
+  50*x(3)+0.2*x(3)^2+(x(1)-40)*4+(x(1)+x(2)-100)*4;
+  x0=[1,1,1];
+  A=[-1 0 0
+      1 0 0
+     -1 -1 0];
+  b=[-40
+     100
+     -100];
+  Aeq=[1,1,1];
+  beq=[180];
+  ub=[0 0 0];
+  lb=[100 100 100];
+  [x,fval]=fmincon(fun,x0,A,b,Aeq,beq,ub,lb)
+  %answer:
+  x =
+      50.0000   60.0000   70.0001
+\end{lstlisting}
+\noindent 第六题答案：
+\begin{lstlisting}[language={[ANSI]C}]
+(1)
+  %build a m file:
+  function [c,ceq]=answer61(x)
+  c=-(1-x(1))^3+x(2);
+  ceq=[];
+  %code:
+  fun =@(x)-x(1);
+  A = [];
+  b = [];
+  Aeq = [];
+  beq = [];
+  lb = [0,0];
+  ub = [inf,inf];
+  nonlcon = @answer61;
+  x0 = [0,0];
+  x = fmincon(fun,x0,A,b,Aeq,beq,lb,ub,nonlcon)
+  %answer:
+  x =
+  0.9988    0.0000
+(2)
+  same as the last
+(3)
+  fun=@(x)(x(1)-3)^2+(x(2)-3)^2;
+  x0=[0,0];
+  A=[1,1];
+  b=4;
+  Aeq=[];
+  beq=[];
+  ub=[0,0];
+  lb=[inf,inf];
+  [x,fval]=fmincon(fun,x0,A,b,Aeq,beq,ub,lb)
+  %answer:
+  x =
+  2.0000    2.0000
+\end{lstlisting}
+\noindent 第七题答案：
+\begin{lstlisting}
+  f=-[15,18,21,24;
+  19,23,22,18;
+  26,18,16,19;
+  19,21,23,17;];
+  intcon=1:16;
+  A=[];
+  b=[];
+  Aeq=[ones(1,4),zeros(1,12);
+  zeros(1,4),ones(1,4),zeros(1,8);
+  zeros(1,8),ones(1,4),zeros(1,4);
+  zeros(1,12),ones(1,4),
+  full(sparse(ones(1,4),[1,5,9,13],ones(1,4))),zeros(1,3);
+  full(sparse(ones(1,4),[2,6,10,14],ones(1,4))),zeros(1,2);
+  full(sparse(ones(1,4),[3,7,11,15],ones(1,4))),zeros(1,1);
+  full(sparse(ones(1,4),[4,8,12,16],ones(1,4)));];
+  beq=ones(8,1);
+  lb=zeros(16,1);
+  ub=ones(16,1);
+  [a,z]=intlinprog(f,intcon,A,b,Aeq,beq,lb,ub);
+  reshape(a,[4,4])
+  z
+  %answer:
+  ans =
+  0     0     0     1
+  0     1     0     0
+  1     0     0     0
+  0     0     1     0
+  z =
+  -96
+\end{lstlisting}
+\noindent 第八题：暂时空着\par
+\noindent 第九题：\\
+\textbf{解：}\par
+设播放音乐节目的时间为$x_{1}$，播放新闻所用的时间为$x_{2}$,商业节目的时间为
+$x_{3}$，依据题意建立线性规划模型：
+\begin{align}
+&\notag \textnormal{max}z=-17.5*x_{1}-40*x_{2}+250*x_{3},\\
+&s.t.
+\begin{cases}
+x_{1}+x_{2}+x_{3}=12\\
+0\leq x_{3}\leq 2.4\\
+1\leq x_{2}\leq 12\\
+0\leq x_{1}\leq 12
+\end{cases}
+\end{align}
+然后发现这是一个很简单的线性规划模型，代码如下：\par
+\begin{lstlisting}
+  f=-[-17.5 -40 250];
+  A=[];
+  b=[];
+  Aeq=[1 1 1];
+  beq=12;
+  lb=[0 1 0];
+  ub=[12 12 2.4];
+  [a,z]=linprog(f,A,b,Aeq,beq,lb,ub)
+  %answer:
+  Optimization terminated.
+  a =
+  8.6000
+  1.0000
+  2.4000
+  z =
+  -409.5000
+\end{lstlisting}
+
+\end{document}
