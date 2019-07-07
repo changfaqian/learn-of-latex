@@ -1,0 +1,158 @@
+\documentclass[oneside]{ctexbook}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{geometry}
+\usepackage{amssymb}
+\geometry{left=3.18cm,right=3.18cm,top=2.54cm,bottom=2.54cm}
+\theoremstyle{definition} \newtheorem{defi}{定义}[section]
+\theoremstyle{definition} \newtheorem{law}{定理}[section]
+\theoremstyle{definition} \newtheorem{jury}{引理}[section]
+\theoremstyle{remark} \newtheorem*{mar}{\heiti 推论}
+\begin{document}
+	\chapter{集合}
+	\section{集合及其运算}
+	\begin{law}
+	设$A,B,C$是集合，则有
+	\begin{enumerate}[(i)]
+		\item 交换律$A\cup B=B\cup A,\quad A\cap B=B\cap A$
+		\item 结合律
+		\begin{align*}
+		A\cup(B\cup C)=&A\cup B\cup C\\
+		A\cap(B\cap C)=&A\cap B\cap C
+		\end{align*}
+		\item 分配律
+		\begin{align*}
+		A\cap(B\cup C)=&(A\cap B)\cup(A\cap C)\\
+		A\cup(B\cap C)=&(A\cup B)\cap(A\cup C)
+		\end{align*}
+	\end{enumerate}
+	\end{law}
+    \begin{proof}
+    	：
+    	\begin{enumerate}[(i)]
+    		\item 交换律\\
+    		$A\cup B=\{x\in A\text{或}x\in B\}=\{x\in B\text{或}x\in A\}=B\cup A$\\
+    		同理\\
+    		$A\cap B=\{x\in A\text{且}x\in B\}=\{x\in B\text{且}x\in A\}=B\cap A$
+    		\item 结合律
+    		\begin{align*}
+    		A\cup(B\cup C)=&A\cup \{x\in A\text{或}x\in B\}\\
+    		              =&\{x\in A\text{或}x\in B\text{或}x\in C\}\\
+    		              =&A\cup B\cup C\\
+    		A\cap(B\cap C)=&A\cap \{x\in A\text{且}x\in B\}\\
+    		              =&\{x\in A\text{且}x\in B\text{且}x\in C\}\\
+    		              =&A\cap B\cap C\\
+    		\end{align*}
+    		\item 分配律\\
+    		因为$A\cap B\in A\cap(B\cup C),A\cap C\in A\cap(B\cup C)$,所以$(A\cap B)\cup(A\cap C)\subseteq A\cap(B\cup C)$.\\
+    		另一方面,$\forall x\in A\cap(B\cup C),x\in A\text{且}x\in B\cup C$，所以当$x\in B$时，$x\in A\cap B$，同理$x\notin B$时，$x\in A\cap C$，所以$\forall x\in A\cap(B\cup C),x\in (A\cap B)\cup(A\cap C)$,所以$A\cap(B\cup C)\subseteq (A\cap B)\cup(A\cap C)$.\\
+    		综上$A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$.
+    	\end{enumerate}
+    \end{proof}
+    \chapter{Lebesgue测度}
+    \section{有界开集、闭集的测度及其性质}
+\begin{law}
+    设$G_{1},G_{2}$是两个有界开集，且$G_{1}\subseteq G_{2}$，则$mG_{1}\leq mG_{2}$(单调性).
+\end{law}
+\begin{law}
+	设有界开集$G$是有限个或可列个可不相交的开集的并，即$G=\underset{k}\cup G_{k}$,$G_{k}$是开集且互不相交，则\[mG=\sum\limits_{k}mG_{k}\quad\text{(完全可加性)}\]
+\end{law}
+\begin{jury}
+	设区间$(a,b)=\underset{k}\cup G_{k},G_{k}$为开集，则\[b-a\leq \sum_{k}mG_{k}\]
+\end{jury}
+\begin{law}
+	设有界开集$G$是有限个或可列个开集$G_{1},G_{2},\dots,$的并，即$G=\underset{k}\cup G_{k}$,则\[mG\leq\sum_{k}mG_{k}\text{(半可加性)}\]
+\end{law}
+\begin{jury}
+	设$F_{1},F_{2},\dots,F_{n}$均为闭集，$F_{k}\subseteq(\alpha_{k},\beta_{k}),k=1,2\dots,n$且$(\alpha_{k},\beta_{k})$等互不相交，则\[m(\overset{n}{\underset{k=1}\cup}F_{k})=\sum_{k=1}^{n}mF_{k}\]
+\end{jury}
+\begin{law}
+	设$F$为闭集，$G$为有界开集，且$F\subseteq G$则\[m(G-F)=mG-mF\]
+\end{law}
+\begin{mar}
+	设$F_{k},k=1,2,\dots,n$是不相交的闭集，则\[m(\underset{k=1}{\overset{n}\cup }F_{k})=\sum_{k=1}^{n}mF_{k}\]
+\end{mar}
+\section{可测集及其性质}
+\begin{defi}
+	设$E$为有界集，$E$的外测度(定义为$m^{*}E$)定义为一切包含$E$的开集的测度的下确界，即\[m^{*}E=\inf\{mG:G\supseteq E,G\text{为开集}\}\]
+	E的内测度(记为$mE$)定义为所有含于$E$闭集的测度的上确界，即\[m_{*}E=\sup\{mF:F\subseteq E,F\text{为闭集}\}\]
+\end{defi}
+\begin{enumerate}[(i)]
+	\item $m_{*}E\leq mE\leq m^{*}E$，也就是说任何有界集的内测度均不超过外测度
+	\item 当$m^{*}E_{2}=\underset{G\subset E_{2},G\text{为开集}}{\inf}mG\geq \underset{G\subset E_{1},G\text{为开集}}{\inf}mG=m^{*}E_{1}$即外测度具有单调性,同样内测度也具有单调性
+\end{enumerate}
+\begin{defi}
+	设E为有界集，当$m_{*}E=m^{*}E$时，称$E$为Lebesgue可测集，简称$E$为可测的，这时的$E$外测度或内测度称为$E$的测度，记为$mE$,即$m_{*}E=m^{*}E= mE.$
+\end{defi}
+\begin{law}
+	有界集$E$为可测的充要条件是：对任给的$\varepsilon> 0$，存在开集$G\subset E$,与闭集$F\supset E$,使$m(G-F)< \varepsilon $.
+\end{law}
+\begin{law}
+	设基本集为$X=(a,b)$.若$E$可测，则E关于$X$的补集$\complement_{X}E$也可测
+\end{law}
+\begin{law}
+	若$E_{1},E_{2}$可测，则$E_{1}\cup E_{2},E_{1}\cap E_{2},E_{1}-E_{2}$，均可测，又若$E_{1},E_{2}$不相交时，则$m(E_{1}\cup E_{2})=mE_{1}+mE_{2}$.
+\end{law}
+\begin{law}
+	设$E_{1},E_{2}$是两个可测集，$E_{1}\subset E_{2}$则\[mE_{1}\leq mE_{2}\]
+\end{law}
+\begin{law}
+	\begin{enumerate}[(i)]
+		\item 设$E=\overset{n}{\underset{k=1}\cup }E_{k}$,每个$E_{k}$均可测，则$E$也可测，又如果$E_{k}$等互不相交，则有\[mE=\sum_{k=1}^{\infty}mE_{k}\text{(完全可加性)}\]
+		\item 设$E=\overset{n}{\underset{k=1}\cap }E_{k}$，每个$E_{k}$均可测，则$E$也可测.
+	\end{enumerate}
+\end{law}
+\begin{jury}
+	设$E\subset (a,b)$，$\complement E$是$E$关于$(a,b)$补集，则有\[m_{*}E+m^{*}\complement E=b-a\]
+\end{jury}
+\begin{law}
+	有界集$E$可测的充要条件是：对于任意集$A$，等式\[m^{*}A=m^{*}(A\cap E)+m^{*}(A\cap\complement E)\]成立.
+\end{law}
+\begin{law}
+	\begin{enumerate}[(i)]
+		\item 设$\{E_{k}\}$是基本集$(a,b)$中的渐张可测集列，即$E_{1}\subset E_{2}\subset\dots,$则$E=\overset{n}{\underset{k=1}\cup }E_{k}$是可测的，且$mE=\underset{k\rightarrow\infty}{\lim}mE_{k}$
+		\item 设$\{E_{k}\}$是基本集$(a,b)$中的渐缩可测集列，即$E_{1}\supset E_{2}\supset\dots,$则$E=\overset{n}{\underset{k=1}\cap }E_{k}$是可测的，且$mE=\underset{k\rightarrow\infty}{\lim}mE_{k}$
+	\end{enumerate}
+	
+\end{law}
+\chapter{Lebesgue可测函数}
+\section{Lebesgue可测函数及其基本性质}
+\begin{defi}
+	设f是定义在可测集$E$上的实函数，如果对每个实数$\alpha$,集$E(f>\alpha)$恒可测(Lebesgue可测)，则称$f$是$E$上(Lebesgue)可测函数.
+\end{defi}
+\begin{defi}
+	若$\forall \alpha \in \textbf{R}$,集$E(f\geq\alpha)$恒可测，则称$f$在$E$上可测.
+\end{defi}
+\begin{defi}
+	若$\forall \alpha \in \textbf{R}$,集$E(f<\alpha)$恒可测，则称$f$在$E$上可测.
+\end{defi}
+\begin{defi}
+	若$\forall \alpha \in \textbf{R}$,集$E(f\leq\alpha)$恒可测，则称$f$在$E$上可测.
+\end{defi}
+\begin{defi}
+	若$E(f=+\infty),E(f=-\infty)$可测，且$\forall \alpha\beta\in \textbf{R},(\alpha<\beta)$,集$E(\alpha<f<\beta)$恒可测，则称$f$在$E$上可测.
+\end{defi}
+\begin{law}
+	1
+\end{law}
+\begin{law}
+	1
+\end{law}
+\begin{law}
+	设$\{f_{n}(x)\}$，$b\in\textbf{N}$是可测$E$上定义的可测函数列，则$\underset{n}{\sup}f_{n}(x)$与$\underset{n}{\inf}f_{n}(x)$都是可测的.
+\end{law}
+\begin{mar}[1]
+	设$f(x)$是可测集$E$上的可测函数，则$f_{+}(x)$，$f_{+}(x)$和$|f(x)|$均可测.
+\end{mar}
+\begin{mar}[2]
+	设$f_{n}(x)$，$n\in\textbf{N}$是可测集$E$上的可测函数，则$\overline{\underset{n}{\lim}}f_{n}(x)$与$\underset{n}{\underline{\lim}}f_{n}(x)$均可测.
+\end{mar}
+\section{可列函数列的收敛性}
+\begin{defi}
+	设给定一个集列$\{A_{n}\}_{n\in\textbf{N}}$，它的上限集、下限集分别定义为\[\underline{\lim}A_{n}=\underset{k=1}{\overset{\infty}{\cap}}\underset{n=k}{\overset{\infty}{\cup}}A_{n},\quad \overline{\lim}A_{n}=\underset{k=1}{\overset{\infty}{\cup}}\underset{n=k}{\overset{\infty}{\cap}}A_{n}\],
+\end{defi}
+\begin{law}
+	
+\end{law}
+\end{document}

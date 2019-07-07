@@ -1,0 +1,51 @@
+\documentclass{ctexart}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\begin{document}
+	\noindent 16.设$X_{1},X_{2},\dots ,X_{n}$是自参数为$\lambda$的Poisson分布的样本，试证明	
+	\begin{align}
+	\hat{\sigma}=\frac{1}{\sqrt{2}} \frac{\varGamma(\frac{n-1}{2})}
+	{\varGamma(\frac{n}{2})}
+	\sqrt{\sum_{i=1}^{n}
+	(\textup{X}_{i}-\overline{\textup{X}})^2}
+	\end{align}
+	是$\sigma$无偏估计。
+	\begin{proof}
+	要证$\hat{\sigma}$是$\sigma$的无偏估计，只需证明$E(\hat{\sigma})=\sigma$即可。
+	\begin{align*}
+	E(\hat{\sigma})=&E(\frac{1}{\sqrt{2}} \frac{\varGamma(\frac{n-1}{2})}
+	{\varGamma(\frac{n}{2})}
+	\sqrt{\sum_{i=1}^{n}
+	(\textup{X}_{i}-\overline{\textup{X}})^2})\\
+	=&\frac{1}{\sqrt{2}} \frac{\varGamma(\frac{n-1}{2})}
+	{\varGamma(\frac{n}{2})}
+	E(\sqrt{\sum_{i=1}^{n}
+	(\textup{X}_{i}-\overline{\textup{X}})^2})
+	\end{align*}
+	由定理3.3知$\frac{1}{\sigma^2}\sum\limits_{i=1}^{n}
+	(\textup{X}_{i}-\overline{\textup{X}})^2\sim \chi^2(n-1)$,所以令$Y=\sum\limits_{i=1}^{n}
+	(\textup{X}_{i}-\overline{\textup{X}})^2$，则
+	\begin{align*}
+	E(\hat{\sigma})=&\frac{1}{\sqrt{2}} \frac{\varGamma(\frac{n-1}{2})}
+	{\varGamma(\frac{n}{2})}
+	E(\sqrt{\sigma^{2}Y})\\
+	=&\frac{1}{\sqrt{2}} \frac{\varGamma(\frac{n-1}{2})}
+	{\varGamma(\frac{n}{2})}
+	\sigma\int_{0}^{+\infty}\sqrt{x}\frac{2^{\frac{-n+1}{2}}}{\varGamma(\frac{n-1}{2})} e^{-\frac{x}{2}}x^{\frac{n-1}{2}-1}dx
+	\end{align*}
+	再令$x=2y$，则
+	\begin{align*}
+		E(\hat{\sigma})=&\frac{1}{\sqrt{2}} \frac{1}
+		{\varGamma(\frac{n}{2})}
+		\sigma\int_{0}^{+\infty}2^{\frac{-n+1}{2}} e^{-y}(2y)^{\frac{n}{2}-1}2dy\\
+		=&\frac{1}{\sqrt{2}} \frac{1}
+		{\varGamma(\frac{n}{2})}
+		\sigma\int_{0}^{+\infty}2^{\frac{1}{2}} e^{-y}(y)^{\frac{n}{2}-1}dy
+	\end{align*}
+	由欧拉第二积分定义得：$\int_{0}^{+\infty}e^{-y}(y)^{\frac{n}{2}-1}dy=\varGamma(\frac{n}{2})$，即
+	\begin{align*}
+	E(\hat{\sigma})=&\frac{1}{\sqrt{2}} \frac{1}
+	{\varGamma(\frac{n}{2})}\sigma2^{\frac{1}{2}}\varGamma(\frac{n}{2})=\sigma
+	\end{align*}
+	\end{proof}
+\end{document}
